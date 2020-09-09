@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import uuid from 'uuid/v4';
 
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
@@ -19,8 +20,17 @@ function TodoApp() {
   ];
   const [ todos, setTodos ] = useState(initialTodos);
   const addTodo = newTodoText => {
-    setTodos([...todos, {id: 5, task: newTodoText, completed: false}]);
+    setTodos([...todos, {id: uuid(), task: newTodoText, completed: false}]);
   };
+  const removeTodo = todoId => {
+    const updatedTodos = todos.filter(todo => todo.id !== todoId);
+    setTodos(updatedTodos);
+  };
+  const toggleTodo = todoId => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === todoId ? {...todo, completed: !todo.completed} : todo);
+    setTodos(updatedTodos);
+  }
   return (
     <Paper 
       style={{
@@ -39,7 +49,7 @@ function TodoApp() {
       <Grid container justify='center' style={{ marginTop: '1rem' }} >
         <Grid item xs={11} md={8} lg={4}>
           <TodoForm addTodo={addTodo} />
-          <TodoList todos={todos}/>
+          <TodoList todos={todos} removeTodo={removeTodo} toggleTodo={toggleTodo} />
         </Grid>
       </Grid>
     </Paper>
