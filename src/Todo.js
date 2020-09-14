@@ -15,19 +15,25 @@ function Todo({ id, task, completed, removeTodo, toggleTodo, editTodo }) {
   const [ isEditing, toggle ] = useToggleState(); //already defaulted to false
   return (
     <ListItem style={{ height: '64px'}}>
-      {isEditing ? <EditTodoForm editTodo={editTodo} id={id} task={task} toggleEditForm={toggle} /> : 
-        <>
-          <Checkbox tabIndex={-1} checked={completed} onClick={() => toggleTodo(id)} />
-          <ListItemText style={{textDecoration: completed ? 'line-through' : 'none'}}>{task}</ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton aria-label='Edit' onClick={toggle}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label='Delete' onClick={() => removeTodo(id)}>
-              <DeleteIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </>
+      {isEditing 
+        ? <EditTodoForm 
+            editTodo={editTodo} 
+            id={id} 
+            task={task} 
+            toggleEditForm={toggle} 
+          /> 
+        : <>
+            <Checkbox tabIndex={-1} checked={completed} onClick={() => toggleTodo(id)} />
+            <ListItemText style={{textDecoration: completed ? 'line-through' : 'none'}}>{task}</ListItemText>
+            <ListItemSecondaryAction>
+              <IconButton aria-label='Edit' onClick={toggle}>
+                <EditIcon />
+              </IconButton>
+              <IconButton aria-label='Delete' onClick={() => removeTodo(id)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </>
       }
     </ListItem>
   )
